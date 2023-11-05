@@ -1,4 +1,4 @@
-package com.hojo.cravel;
+package com.hojo.cravel.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorldController {
 
-    @GetMapping(path = "/helloWorld")
+    @GetMapping("/")
     public String helloWorld() {
         return "Hello world!";
     }

@@ -1,48 +1,24 @@
 package com.hojo.cravel.services;
 
+import com.hojo.cravel.exceptions.ProductNotFoundException;
 import com.hojo.cravel.model.Product;
-import com.hojo.cravel.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
-public class ProductService {
+public interface ProductService {
 
-    @Autowired
-    private ProductRepository repository;
+    Product saveProduct(Product product);
 
-    public Product saveProduct(Product product) {
-        return repository.save(product);
-    }
+    List<Product> saveProducts(List<Product> products);
 
-    public List<Product> saveProducts(List<Product> products) {
-        return repository.saveAll(products);
-    }
+    List<Product> getProducts();
 
-    public List<Product> getProducts() {
-        return repository.findAll();
-    }
+    Product getProductById(long id) throws ProductNotFoundException;
 
-    public Product getProductById(int id) {
-        return repository.findById(id).orElse(null);
-    }
+    Product getProductByName(String name);
 
-    public Product getProductByName(String name) {
-        return repository.findByName(name);
-    }
+    Product updateProduct(Product product);
 
-    public String deleteProduct(int id) {
-        repository.deleteById(id);
-        return "Product Removed " + id;
-    }
+    String deleteProduct(long id);
 
-    public Product updateProduct(Product product) {
-        Product existingProduct = repository.findById(product.getId()).orElse(null);
-        existingProduct.setName(product.getName());
-        existingProduct.setQuantity(product.getQuantity());
-        existingProduct.setPrice(product.getPrice());
-        return repository.save(existingProduct);
-    }
 }

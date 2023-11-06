@@ -1,7 +1,11 @@
 package com.hojo.cravel.controllers;
 
+import com.hojo.cravel.exceptions.ProductNotFoundException;
 import com.hojo.cravel.model.Product;
 import com.hojo.cravel.services.ProductService;
+import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +17,13 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @PostMapping("/addproduct")
-    public Product addProduct(@RequestBody Product product) {
+    @PostMapping("/addProduct")
+    public Product addProduct(@Valid @RequestBody Product product) {
         return service.saveProduct(product);
     }
 
-    @PostMapping("/addproducts")
-    public List<Product> addProducts(@RequestBody List<Product> products) {
+    @PostMapping("/addProducts")
+    public List<Product> addProducts(@Valid @RequestBody List<Product> products) {
         return service.saveProducts(products);
     }
 
@@ -28,12 +32,12 @@ public class ProductController {
         return service.getProducts();
     }
 
-    @GetMapping("/product/{id}")
-    public Product findProductById(@PathVariable int id) {
+    @GetMapping("/productById/{id}")
+    public Product findProductById(@PathVariable long id) throws ProductNotFoundException {
         return service.getProductById(id);
     }
 
-    @GetMapping("/product/{name}")
+    @GetMapping("/productByName/{name}")
     public Product findProductByName(@PathVariable String name) {
         return service.getProductByName(name);
     }
@@ -44,7 +48,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public String deleteProduct(@PathVariable int id) {
+    public String deleteProduct(@PathVariable long id) {
         return service.deleteProduct(id);
     }
 }
